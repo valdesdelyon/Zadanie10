@@ -1,4 +1,5 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -10,25 +11,26 @@ import org.openqa.selenium.support.ui.Select;
 import java.nio.channels.SelectableChannel;
 import java.util.concurrent.TimeUnit;
 
+import static junit.framework.TestCase.assertTrue;
+
 public class TestKatalonForm0331 {
 
-WebDriver driver;
-String nameId = "firstName";
-String lastNameId = "lastName";
-// String genderId = "gender";
-String genderM = "/html/body/div/div/form/div[3]/div/div/label[1]/input";
-String genderF = "/html/body/div/div/form/div[3]/div/div/label[2]/input";
-String dobId = "dob";
-String addressId = "address";
-String emailId = "email";
-String passwordId = "password";
-String companyId = "company";
-String roleId = "role";
-String ways = "/html/body/div/div/form/div[11]/div/div[1]/label/input";
-String commentId = "comment";
-String submitId = "submit";
-
-
+    WebDriver driver;
+    String nameId = "firstName";
+    String lastNameId = "lastName";
+    // String genderId = "gender";
+    String genderM = "/html/body/div/div/form/div[3]/div/div/label[1]/input";
+    String genderF = "/html/body/div/div/form/div[3]/div/div/label[2]/input";
+    String dobId = "dob";
+    String addressId = "address";
+    String emailId = "email";
+    String passwordId = "password";
+    String companyId = "company";
+    String roleId = "role";
+    String ways = "/html/body/div/div/form/div[11]/div/div[1]/label/input";
+    String commentId = "comment";
+    String submitId = "submit";
+    String submitMsgId = "submit-msg";
 
     @Before
     public void setUp() {
@@ -42,12 +44,23 @@ String submitId = "submit";
 
 
     @Test
-    public void testValidUserRegistration()
-    {
+    public void testValidUserRegistration() {
         WebElement nameField = driver.findElement(By.name(nameId));
-nameField.click();
-nameField.clear();
-nameField.sendKeys("John");
+
+
+        if (nameField.isDisplayed()) {
+
+            nameField.click();
+            nameField.clear();
+            nameField.sendKeys("John");
+            System.out.println("Jest dostepny");
+
+        } else {
+            System.out.println("Nie Jest dostepny");
+            Assert.fail();
+
+        }
+
 
         WebElement lastNameField = driver.findElement(By.name(lastNameId));
         lastNameField.click();
@@ -101,15 +114,12 @@ nameField.sendKeys("John");
         commentField.clear();
         commentField.sendKeys("Ala ma kota");
 
-    WebElement submitButton = driver.findElement(By.id(submitId));
-submitButton.click();
+        WebElement submitButton = driver.findElement(By.id(submitId));
+        submitButton.click();
 
+        WebElement checkSubmitMsg = driver.findElement(By.id(submitMsgId));
+        assertTrue(checkSubmitMsg.isDisplayed());
     }
-
-
-
-
-
 
 
 //@After
